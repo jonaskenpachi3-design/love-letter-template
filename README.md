@@ -6,9 +6,7 @@ animado no Canvas, com as estrelas se organizando para formar o nome de
 alguém especial, envelope com carta, galeria de fotos, player de música e
 um contador de tempo desde uma data marcante.
 
-> 🔗 **[Ver demo ao vivo](#)** — *(adicione aqui o link do GitHub Pages
-> depois do deploy)*
-
+> 🔗 https://jonaskenpachi3-design.github.io/love-letter-template/
 ## ✨ Funcionalidades
 
 - **Céu estrelado animado** em Canvas 2D, com nebulosas, parallax pelo
