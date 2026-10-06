@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alguém Especial ♡ — A Sky Made of Love</title>
+
+    <meta name="description" content="Uma experiência cinematográfica criada com HTML, CSS e JavaScript.">
+    <meta name="theme-color" content="#05020A">
+
+    <!-- Open Graph / preview ao compartilhar o link -->
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Alguém Especial ♡ — A Sky Made of Love">
+    <meta property="og:description" content="Uma experiência cinematográfica criada com HTML, CSS e JavaScript.">
+    <meta property="og:image" content="assets/images/photo1.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Alguém Especial ♡ — A Sky Made of Love">
+    <meta name="twitter:description" content="Uma experiência cinematográfica criada com HTML, CSS e JavaScript.">
+    <meta name="twitter:image" content="assets/images/photo1.jpg">
+
+    <!-- Favicon: mesmo coração usado na intro, como SVG inline -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 180'%3E%3Cpath fill='%23ff4da5' d='M100 150 L35 85 A35 35 0 1 1 100 55 A35 35 0 1 1 165 85 Z'/%3E%3C/svg%3E">
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- =========================================
+         INTRO CINEMATOGRÁFICA
+    ========================================== -->
+
+    <div id="intro" class="intro">
+
+        <svg class="heart-svg" viewBox="0 0 200 180" aria-hidden="true">
+
+            <path d="M100 150 L35 85 A35 35 0 1 1 100 55 A35 35 0 1 1 165 85 Z"/>
+
+        </svg>
+
+        <p class="small">For someone special...</p>
+
+        <p class="intro-name">Alguém Especial</p>
+
+    </div>
+
+    <!-- =========================================
+         CANVAS
+    ========================================== -->
+
+    <canvas id="bg"></canvas>
+    <canvas id="textCanvas" hidden></canvas>
+
+    <div class="spotlight"></div>
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <span class="eyebrow">Made with Love</span>
+
+            <h1>Alguém Especial <span>♡</span></h1>
+
+            <p>
+                Every star in this sky carries a piece of what I feel.
+            </p>
+
+            <div class="hero-actions">
+
+                <button id="startBtn" aria-label="Começar experiência">
+                    Começar ✨
+                </button>
+
+            </div>
+
+            <!-- PLAYER -->
+
+            <div class="music-player">
+
+                <div id="vinyl" class="vinyl"></div>
+
+                <div class="music-info">
+
+                    <strong>Nosso Céu</strong>
+
+                    <span>Alguém Especial ♡</span>
+
+                    <div class="progress">
+
+                        <div id="progressBar" class="progress-bar"></div>
+
+                    </div>
+
+                    <div class="time-row">
+
+                        <span id="currentTime">0:00</span>
+
+                        <span id="duration">0:00</span>
+
+                    </div>
+
+                    <!-- O JS cria as ondas automaticamente -->
+
+                </div>
+
+                <button
+                    id="musicBtn"
+                    class="play-btn"
+                    aria-label="Tocar música">
+
+                    ▶
+
+                </button>
+
+                <input
+                    id="volumeSlider"
+                    class="volume-slider"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0.7"
+                    aria-label="Volume">
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- =========================================
+         CONTEÚDO
+    ========================================== -->
+
+    <main>
+
+        <!-- =========================
+             GALERIA
+        ========================== -->
+
+        <section class="gallery">
+
+            <h2>Memórias</h2>
+
+            <!--
+                Os cards de foto são gerados automaticamente em
+                tempo de execução a partir de SITE_CONFIG.photos
+                (veja js/config.js). Edite lá para adicionar,
+                remover ou trocar fotos — não é preciso mexer aqui.
+            -->
+
+            <div class="grid"></div>
+
+        </section>
+
+        <!-- =========================
+             CARTA
+        ========================== -->
+
+        <section class="letter">
+
+            <h2>Uma carta</h2>
+
+            <div id="envelope" class="envelope">
+
+                <div class="lid"></div>
+
+                <div class="paper">
+
+                    <p>
+                        Se cada estrela fosse um pensamento meu,
+                        o céu ainda seria pequeno.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             CONTADOR
+        ========================== -->
+
+        <section class="counter">
+
+            <h2>Nosso Tempo</h2>
+
+            <div id="timer" class="time"></div>
+
+        </section>
+
+        <!-- =========================
+             FINAL
+        ========================== -->
+
+        <section class="ending">
+
+            <h2>Alguém Especial ♡</h2>
+
+            <p>
+                Algumas pessoas passam pela nossa vida.
+                Outras mudam o céu inteiro.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="footer">
+
+        <p>Made with ♡ by Jonas Sousa</p>
+
+    </footer>
+
+    <!-- =========================================
+         LIGHTBOX
+    ========================================== -->
+
+    <div id="lightbox" class="lightbox">
+
+        <button
+            id="closeLightbox"
+            class="lb-btn"
+            aria-label="Fechar">
+
+            ✕
+
+        </button>
+
+        <button
+            id="prevPhoto"
+            class="lb-btn left"
+            aria-label="Foto anterior">
+
+            ❮
+
+        </button>
+
+        <img
+            id="lightboxImg"
+            alt="Imagem ampliada">
+
+        <button
+            id="nextPhoto"
+            class="lb-btn right"
+            aria-label="Próxima foto">
+
+            ❯
+
+        </button>
+
+    </div>
+
+    <!-- =========================================
+         ÁUDIO
+    ========================================== -->
+
+    <audio id="bgMusic" loop preload="auto">
+
+        <source src="assets/music/musica.mp3" type="audio/mpeg">
+
+        Seu navegador não suporta áudio.
+
+    </audio>
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

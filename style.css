@@ -1,0 +1,1661 @@
+/* ==========================================================
+   MICAELY • Director's Cut 5.2
+   Parte 1/3
+   Base • Hero • Player • Layout
+========================================================== */
+
+/* ================= Variáveis ================= */
+
+:root{
+
+    --bg:#05020A;
+
+    --pink:#ff4da5;
+    --pink-soft:#ff7ec4;
+    --pink-light:#ffd5eb;
+
+    --purple:#8b3dff;
+
+    --text:#ffffff;
+    --text-secondary:#d9d9d9;
+    --text-muted:#9a9a9a;
+
+    --glass:rgba(255,255,255,.06);
+    --glass-border:rgba(255,255,255,.12);
+
+    --radius:32px;
+
+}
+
+/* ================= Reset ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:"Poppins",sans-serif;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    min-height:100vh;
+
+}
+
+/* ================= Canvas ================= */
+
+#bg{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    z-index:-2;
+
+    display:block;
+
+}
+
+#textCanvas{
+
+    display:none;
+
+}
+
+/* ================= Spotlight ================= */
+
+.spotlight{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at var(--x,50%) var(--y,50%),
+            rgba(255,77,165,.18),
+            transparent 240px
+        );
+
+    z-index:-1;
+
+}
+
+/* ================= Intro ================= */
+
+.intro{
+
+    position:fixed;
+
+    inset:0;
+
+    display:grid;
+
+    place-items:center;
+
+    text-align:center;
+
+    background:#000;
+
+    z-index:999;
+
+    animation:fadeOut .8s ease 2.8s forwards;
+
+}
+
+.heart-svg{
+
+    width:120px;
+
+    margin-bottom:18px;
+
+}
+
+.heart-svg path{
+
+    fill:none;
+
+    stroke:var(--pink);
+
+    stroke-width:4;
+
+    stroke-dasharray:500;
+
+    stroke-dashoffset:500;
+
+    animation:drawHeart 2s forwards;
+
+}
+
+.small{
+
+    font-size:12px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:var(--text-muted);
+
+}
+
+.intro-name{
+
+    font:72px "Alex Brush",cursive;
+
+    color:var(--pink-light);
+
+}
+
+/* ================= Hero ================= */
+
+.hero{
+
+    position:relative;
+
+    z-index:10;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:40px 24px;
+
+}
+
+.hero-content{
+
+    width:100%;
+
+    max-width:780px;
+
+    text-align:center;
+
+    position:relative;
+
+    z-index:11;
+
+}
+
+.eyebrow{
+
+    font-size:12px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:var(--text-muted);
+
+    margin-bottom:18px;
+
+}
+
+/* Hero Reveal */
+
+.hero h1,
+.hero p,
+.hero-actions,
+.music-player{
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    transition:
+        opacity .9s ease,
+        transform .9s ease;
+
+}
+
+body.hero-ready .hero h1,
+body.hero-ready .hero p,
+body.hero-ready .hero-actions,
+body.hero-ready .music-player{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* Título */
+
+.hero h1{
+
+    font:clamp(72px,14vw,170px) "Alex Brush",cursive;
+
+    color:white;
+
+    text-shadow:
+        0 0 12px rgba(255,255,255,.35),
+        0 0 35px rgba(255,77,165,.45),
+        0 0 70px rgba(255,77,165,.25);
+
+}
+
+.hero h1 span{
+
+    color:var(--pink);
+
+}
+
+.hero p{
+
+    margin:22px auto 34px;
+
+    max-width:620px;
+
+    font-size:20px;
+
+    line-height:1.7;
+
+    color:var(--text-secondary);
+
+}
+
+/* ================= Botões ================= */
+
+.hero-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+
+}
+
+button{
+
+    border:none;
+
+    border-radius:999px;
+
+    padding:16px 30px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    color:white;
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+}
+
+button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 18px 45px rgba(255,77,165,.35);
+
+}
+
+/* Ripple de clique */
+
+.btn-ripple{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.55);
+
+    transform:scale(0);
+
+    pointer-events:none;
+
+    animation:rippleExpand .6s ease-out;
+
+}
+
+@keyframes rippleExpand{
+
+    to{
+
+        transform:scale(1);
+        opacity:0;
+
+    }
+
+}
+
+/* ================= Player ================= */
+
+.music-player{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:20px 24px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.03)
+        );
+
+    border:1px solid var(--glass-border);
+
+    backdrop-filter:blur(24px);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.35);
+
+}
+
+.vinyl{
+
+    width:72px;
+    height:72px;
+
+    border-radius:50%;
+
+    flex-shrink:0;
+
+    position:relative;
+
+    background:
+        radial-gradient(
+            circle,
+            #222 18%,
+            #111 19%,
+            #444 23%,
+            #111 42%,
+            #000
+        );
+
+}
+
+.vinyl::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:var(--pink);
+
+    transform:translate(-50%,-50%);
+
+}
+
+.vinyl.playing{
+
+    animation:spin 3s linear infinite;
+
+}
+
+.music-info{
+
+    flex:1;
+
+}
+
+.music-info strong{
+
+    display:block;
+
+    font-size:18px;
+
+}
+
+.music-info span{
+
+    color:var(--text-muted);
+
+    font-size:14px;
+
+}
+
+.progress{
+
+    margin-top:10px;
+
+    height:5px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.12);
+
+    overflow:hidden;
+
+}
+
+.progress-bar{
+
+    width:0;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--pink),
+            var(--purple)
+        );
+
+}
+
+.time-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    color:#aaa;
+
+}
+
+.play-btn{
+
+    width:54px;
+    height:54px;
+
+    padding:0;
+
+    border-radius:50%;
+
+}
+
+.play-btn:disabled{
+
+    opacity:.4;
+    cursor:not-allowed;
+
+}
+
+/* Slider de volume */
+
+.volume-slider{
+
+    width:70px;
+
+    accent-color:var(--pink,#ff4da5);
+
+    cursor:pointer;
+
+}
+
+@media (max-width:700px){
+
+    .volume-slider{
+
+        width:120px;
+
+        margin-top:6px;
+
+    }
+
+}
+
+/* Ondas */
+
+.sound-wave{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:3px;
+
+    height:20px;
+
+    margin-top:10px;
+
+}
+
+.sound-wave span{
+
+    width:4px;
+
+    height:6px;
+
+    border-radius:999px;
+
+    background:var(--pink);
+
+}
+
+.sound-wave.playing span{
+
+    animation:wave 1s infinite ease-in-out;
+
+}
+
+.sound-wave span:nth-child(2){animation-delay:.15s;}
+.sound-wave span:nth-child(3){animation-delay:.30s;}
+.sound-wave span:nth-child(4){animation-delay:.45s;}
+.sound-wave span:nth-child(5){animation-delay:.60s;}
+
+/* ================= Layout ================= */
+
+main{
+
+    padding:90px 24px;
+
+}
+
+.gallery,
+.letter,
+.counter,
+.ending{
+
+    max-width:1150px;
+
+    margin:0 auto 140px;
+
+}
+
+h2{
+
+    position:relative;
+
+    text-align:center;
+
+    margin-bottom:36px;
+
+    font:48px "Cormorant Garamond",serif;
+
+    text-shadow:
+        0 0 20px rgba(255,77,165,.15);
+
+}
+
+h2::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-12px;
+
+    transform:translateX(-50%);
+
+    width:70px;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--pink),
+            transparent
+        );
+
+}
+
+/* ==========================================================
+   Parte 2/3
+   Galeria • Carta • Lightbox • Efeitos Premium
+========================================================== */
+
+/* ================= Galeria Premium ================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:32px;
+
+}
+
+/* Card */
+
+.card{
+
+    position:relative;
+
+    aspect-ratio:4/5;
+
+    overflow:hidden;
+
+    border-radius:32px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(24px);
+
+    transform-style:preserve-3d;
+
+    transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        box-shadow .45s;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.28);
+
+    will-change:transform;
+
+}
+
+/* Imagem */
+
+.card img{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    object-position:center;
+
+    transition:
+        transform .8s ease,
+        filter .8s ease;
+
+}
+
+/* Reflexo */
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-45%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.35),
+            transparent
+        );
+
+    transform:
+        translateX(-140%)
+        rotate(14deg);
+
+    transition:.9s;
+
+    z-index:3;
+
+}
+
+/* Gradiente */
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.72),
+            transparent 60%
+        );
+
+    z-index:2;
+
+}
+
+/* Hover */
+
+.card:hover{
+
+    transform:
+        perspective(1000px)
+        rotateX(5deg)
+        rotateY(-5deg)
+        translateY(-14px);
+
+    box-shadow:
+        0 35px 70px rgba(255,77,165,.22);
+
+}
+
+.card:hover img{
+
+    transform:scale(1.08);
+
+    filter:
+        saturate(1.08)
+        brightness(1.05);
+
+}
+
+.card:hover::before{
+
+    transform:
+        translateX(140%)
+        rotate(14deg);
+
+}
+
+/* ================= Legenda ================= */
+
+.caption{
+
+    position:absolute;
+
+    left:22px;
+    right:22px;
+    bottom:22px;
+
+    z-index:4;
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+
+}
+
+.card:hover .caption{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+.caption h3{
+
+    font-size:22px;
+
+    margin-bottom:4px;
+
+}
+
+.caption p{
+
+    font-size:14px;
+
+    line-height:1.4;
+
+    color:#ddd;
+
+}
+
+/* ================= Carta Cinematográfica ================= */
+
+.envelope{
+
+    position:relative;
+
+    width:min(560px,100%);
+
+    height:320px;
+
+    margin:auto;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    cursor:pointer;
+
+    background:#1b1020;
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.45);
+
+    transition:
+        transform .4s ease;
+
+    perspective:1000px;
+
+}
+
+.envelope:hover{
+
+    transform:translateY(-4px);
+
+}
+
+/* Tampa */
+
+.lid{
+
+    position:absolute;
+
+    inset:0;
+
+    clip-path:polygon(0 0,100% 0,50% 55%);
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    transform-origin:top;
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
+
+    transition:
+        transform .9s cubic-bezier(.22,1,.36,1),
+        box-shadow .9s ease;
+
+}
+
+/* Papel */
+
+.paper{
+
+    position:absolute;
+
+    left:8%;
+    right:8%;
+
+    bottom:-72%;
+
+    height:86%;
+
+    padding:34px;
+
+    border-radius:22px;
+
+    background:white;
+
+    color:#222;
+
+    font:23px "Cormorant Garamond",serif;
+
+    line-height:1.7;
+
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,.06),
+        0 20px 40px rgba(0,0,0,.15);
+
+    transition:
+        bottom .9s cubic-bezier(.22,1,.36,1);
+
+}
+
+.paper p{
+
+    position:relative;
+
+}
+
+/* Cursor */
+
+.paper p::after{
+
+    content:"|";
+
+    color:var(--pink);
+
+    animation:blink .8s infinite;
+
+}
+
+/* Estado aberto */
+
+.envelope.open .lid{
+
+    transform:rotateX(178deg);
+
+    box-shadow:0 -20px 40px rgba(0,0,0,.35);
+
+}
+
+.envelope.open .paper{
+
+    bottom:8%;
+
+}
+
+/* ================= Lightbox ================= */
+
+.lightbox{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(20,10,35,.82),
+            rgba(0,0,0,.96)
+        );
+
+    backdrop-filter:blur(28px);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:
+        opacity .45s ease,
+        visibility .45s ease;
+
+    z-index:999;
+
+}
+
+.lightbox.open{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+/* Imagem */
+
+.lightbox img{
+
+    width:min(92vw,1200px);
+
+    max-height:90vh;
+
+    border-radius:26px;
+
+    transform:scale(.88);
+
+    transition:
+        transform .35s ease;
+
+    box-shadow:
+        0 45px 120px rgba(0,0,0,.6);
+
+}
+
+.lightbox.open img{
+
+    transform:scale(1);
+
+}
+
+/* Botões */
+
+.lb-btn{
+
+    position:absolute;
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+
+}
+
+.lb-btn:hover{
+
+    transform:scale(1.08);
+
+    background:rgba(255,255,255,.15);
+
+}
+
+/* Fechar */
+
+#closeLightbox{
+
+    top:30px;
+    right:30px;
+
+}
+
+/* Navegação */
+
+.left{
+
+    left:30px;
+
+}
+
+.right{
+
+    right:30px;
+
+}
+
+/* ================= Cursor Magnético ================= */
+
+.card,
+button,
+.music-player{
+
+    will-change:transform;
+
+}
+
+/* ================= Glow Premium ================= */
+
+.music-player:hover{
+
+    box-shadow:
+        0 35px 90px rgba(255,77,165,.18);
+
+}
+
+.hero h1 span{
+
+    filter:
+        drop-shadow(
+            0 0 18px rgba(255,77,165,.45)
+        );
+
+}
+
+/* ================= Reveal ================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+
+}
+
+.reveal.visible{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* ==========================================================
+   Parte 3/3
+   Contador • Footer • Responsividade • Animações
+========================================================== */
+
+/* ================= Contador ================= */
+
+.time{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+.time div{
+
+    background:var(--glass);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    padding:28px;
+
+    border-radius:22px;
+
+    text-align:center;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+}
+
+.time div:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+        0 20px 45px rgba(255,77,165,.15);
+
+}
+
+.num{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    color:var(--pink-soft);
+
+    display:inline-block;
+
+    overflow:hidden;
+
+}
+
+/* Efeito "odômetro" ao trocar de valor */
+
+@keyframes numTick{
+
+    0%{
+
+        transform:translateY(-55%);
+        opacity:0;
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+        opacity:1;
+
+    }
+
+}
+
+.num.tick{
+
+    animation:numTick .4s cubic-bezier(.22,1,.36,1);
+
+}
+
+.lbl{
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    color:var(--text-muted);
+
+    text-transform:uppercase;
+
+}
+
+/* ================= Final ================= */
+
+.ending{
+
+    text-align:center;
+
+    padding:120px 0;
+
+}
+
+.ending p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    color:#bbb;
+
+}
+
+/* ================= Footer ================= */
+
+.footer{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+    color:#777;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.footer p{
+
+    transition:color .3s ease;
+
+}
+
+.footer:hover p{
+
+    color:var(--pink-soft);
+
+}
+
+/* ================= Scrollbar ================= */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0b0712;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--pink-light),
+            var(--pink)
+        );
+
+}
+
+/* ================= Seleção ================= */
+
+::selection{
+
+    background:rgba(255,77,165,.35);
+
+    color:white;
+
+}
+
+/* ================= Focus ================= */
+
+button:focus-visible,
+.lb-btn:focus-visible{
+
+    outline:2px solid var(--pink);
+
+    outline-offset:4px;
+
+}
+
+img{
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+/* ================= Microinterações ================= */
+
+.music-player{
+
+    animation:glow 6s ease-in-out infinite;
+
+}
+
+.vinyl{
+
+    transition:transform .3s ease;
+
+}
+
+.vinyl:hover{
+
+    transform:scale(1.05);
+
+}
+
+.hero-content{
+
+    animation:float 8s ease-in-out infinite;
+
+}
+
+/* ================= Animações ================= */
+
+@keyframes drawHeart{
+
+    to{
+
+        stroke-dashoffset:0;
+
+    }
+
+}
+
+@keyframes fadeOut{
+
+    99%{
+
+        opacity:0;
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        visibility:hidden;
+
+        pointer-events:none;
+
+    }
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes wave{
+
+    0%,100%{
+
+        height:6px;
+
+    }
+
+    50%{
+
+        height:20px;
+
+    }
+
+}
+
+@keyframes blink{
+
+    50%{
+
+        opacity:0;
+
+    }
+
+}
+
+@keyframes float{
+
+    0%,100%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+}
+
+@keyframes glow{
+
+    0%,100%{
+
+        box-shadow:
+            0 0 20px rgba(255,77,165,.08);
+
+    }
+
+    50%{
+
+        box-shadow:
+            0 0 35px rgba(255,77,165,.22);
+
+    }
+
+}
+
+/* ================= Responsividade ================= */
+
+@media (max-width:1100px){
+
+    .grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media (max-width:900px){
+
+    .hero h1{
+
+        font-size:100px;
+
+    }
+
+    .music-player{
+
+        gap:14px;
+
+    }
+
+}
+
+@media (max-width:700px){
+
+    .hero{
+
+        padding:30px 20px;
+
+    }
+
+    .hero h1{
+
+        font-size:82px;
+
+    }
+
+    .hero p{
+
+        font-size:18px;
+
+    }
+
+    .music-player{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .time{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .paper{
+
+        font-size:20px;
+
+        padding:26px;
+
+    }
+
+    .lightbox img{
+
+        width:95vw;
+
+    }
+
+}
+
+@media (max-width:560px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .caption{
+
+        left:18px;
+
+        right:18px;
+
+        bottom:18px;
+
+    }
+
+}
+
+@media (max-width:480px){
+
+    .hero h1{
+
+        font-size:68px;
+
+    }
+
+    h2{
+
+        font-size:34px;
+
+    }
+
+    .grid{
+
+        gap:22px;
+
+    }
+
+    .caption h3{
+
+        font-size:18px;
+
+    }
+
+    .time{
+
+        gap:14px;
+
+    }
+
+    .time div{
+
+        padding:20px;
+
+    }
+
+    .num{
+
+        font-size:34px;
+
+    }
+
+    .lb-btn{
+
+        width:46px;
+
+        height:46px;
+
+    }
+
+}
+
+/* ================= Preferências do usuário ================= */
+
+@media (prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+
+    }
+
+}
